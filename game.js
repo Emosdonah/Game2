@@ -2,24 +2,38 @@ window.onload = function() {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
+    // 设置画布为手机屏幕大小
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const characterSize = 50;
+    const groundLevel = canvas.height - characterSize - 50;
     let characterX = 100;
-    let characterY = 300;
+    let characterY = groundLevel;
     let isJumping = false;
 
+    // 障碍物信息
     let obstacles = [
-        { x: 400, y: 300, width: 50, height: 50 },
-        { x: 600, y: 250, width: 50, height: 50 }
+        { x: 400, y: groundLevel, width: 50, height: 50 },
+        { x: 700, y: groundLevel - 50, width: 50, height: 50 }
     ];
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        // 背景
         ctx.fillStyle = '#87CEEB';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        ctx.fillStyle = 'green';
-        ctx.fillRect(characterX, characterY, 50, 50);
+        // 地面
+        ctx.fillStyle = '#654321';
+        ctx.fillRect(0, groundLevel + characterSize, canvas.width, 50);
 
+        // 角色
+        ctx.fillStyle = 'green';
+        ctx.fillRect(characterX, characterY, characterSize, characterSize);
+
+        // 障碍物
         ctx.fillStyle = 'gray';
         obstacles.forEach(obstacle => {
             ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
@@ -31,10 +45,10 @@ window.onload = function() {
 
     document.getElementById('moveLeft').addEventListener('touchstart', function() {
         moveLeftInterval = setInterval(() => {
-            characterX -= 2;
+            characterX -= 8; // 增加移动速度
             if (characterX < 0) characterX = 0;
             draw();
-        }, 30);
+        }, 20);
     });
 
     document.getElementById('moveLeft').addEventListener('touchend', function() {
@@ -43,10 +57,10 @@ window.onload = function() {
 
     document.getElementById('moveRight').addEventListener('touchstart', function() {
         moveRightInterval = setInterval(() => {
-            characterX += 2;
-            if (characterX > canvas.width - 50) characterX = canvas.width - 50;
+            characterX += 8; // 增加移动速度
+            if (characterX > canvas.width - characterSize) characterX = canvas.width - characterSize;
             draw();
-        }, 30);
+        }, 20);
     });
 
     document.getElementById('moveRight').addEventListener('touchend', function() {
@@ -58,24 +72,24 @@ window.onload = function() {
             isJumping = true;
             let jumpHeight = 0;
             const jumpInterval = setInterval(() => {
-                if (jumpHeight < 100) {
-                    characterY -= 5;
-                    jumpHeight += 5;
+                if (jumpHeight < 120) {
+                    characterY -= 10; // 提高跳跃高度和速度
+                    jumpHeight += 10;
                 } else {
                     clearInterval(jumpInterval);
                     const fallInterval = setInterval(() => {
-                        if (characterY < 300) {
-                            characterY += 5;
+                        if (characterY < groundLevel) {
+                            characterY += 10;
                         } else {
-                            characterY = 300;
+                            characterY = groundLevel;
                             clearInterval(fallInterval);
                             isJumping = false;
                         }
                         draw();
-                    }, 30);
+                    }, 20);
                 }
                 draw();
-            }, 30);
+            }, 20);
         }
     });
 
@@ -83,9 +97,9 @@ window.onload = function() {
         obstacles.forEach(obstacle => {
             if (
                 characterX < obstacle.x + obstacle.width &&
-                characterX + 50 > obstacle.x &&
+                characterX + characterSize > obstacle.x &&
                 characterY < obstacle.y + obstacle.height &&
-                characterY + 50 > obstacle.y
+                characterY + characterSize > obstacle.y
             ) {
                 alert('Game Over! Collision detected.');
                 resetGame();
@@ -95,7 +109,7 @@ window.onload = function() {
 
     function resetGame() {
         characterX = 100;
-        characterY = 300;
+        characterY = groundLevel;
         draw();
     }
 
