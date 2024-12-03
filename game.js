@@ -4,7 +4,7 @@ window.onload = function() {
 
     // 设置画布大小
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight * 0.8; // 保留底部空间放按钮
+    canvas.height = window.innerHeight * 0.8; // 留出下方按钮空间
 
     const characterSize = 50;
     const groundLevel = canvas.height - characterSize - 20; // 地面高度
@@ -12,7 +12,7 @@ window.onload = function() {
     let characterY = groundLevel;
     let isJumping = false;
 
-    // 障碍物信息
+    // 障碍物
     let obstacles = [
         { x: 400, y: groundLevel, width: 50, height: 50 },
         { x: 700, y: groundLevel - 50, width: 50, height: 50 }
@@ -21,16 +21,12 @@ window.onload = function() {
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // 背景
-        ctx.fillStyle = '#87CEEB'; // 蓝色背景
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
         // 地面
         ctx.fillStyle = '#654321'; // 棕色地面
         ctx.fillRect(0, groundLevel + characterSize, canvas.width, 20);
 
         // 角色
-        ctx.fillStyle = 'green'; // 绿色方块角色
+        ctx.fillStyle = 'green'; // 绿色角色
         ctx.fillRect(characterX, characterY, characterSize, characterSize);
 
         // 障碍物
@@ -45,7 +41,7 @@ window.onload = function() {
 
     document.getElementById('moveLeft').addEventListener('touchstart', function() {
         moveLeftInterval = setInterval(() => {
-            characterX -= 10; // 移动速度
+            characterX -= 10; // 左移速度
             if (characterX < 0) characterX = 0;
             draw();
         }, 20);
@@ -57,7 +53,7 @@ window.onload = function() {
 
     document.getElementById('moveRight').addEventListener('touchstart', function() {
         moveRightInterval = setInterval(() => {
-            characterX += 10; // 移动速度
+            characterX += 10; // 右移速度
             if (characterX > canvas.width - characterSize) characterX = canvas.width - characterSize;
             draw();
         }, 20);
@@ -72,14 +68,14 @@ window.onload = function() {
             isJumping = true;
             let jumpHeight = 0;
             const jumpInterval = setInterval(() => {
-                if (jumpHeight < 150) {
-                    characterY -= 5; // 减慢上升速度
+                if (jumpHeight < 200) {
+                    characterY -= 5; // 跳跃上升速度
                     jumpHeight += 5;
                 } else {
                     clearInterval(jumpInterval);
                     const fallInterval = setInterval(() => {
                         if (characterY < groundLevel) {
-                            characterY += 5; // 减慢下降速度
+                            characterY += 3; // 减慢下降速度
                         } else {
                             characterY = groundLevel;
                             clearInterval(fallInterval);
@@ -101,7 +97,7 @@ window.onload = function() {
                 characterY < obstacle.y + obstacle.height &&
                 characterY + characterSize > obstacle.y
             ) {
-                alert('Game Over! Collision detected.');
+                alert('游戏结束！碰到了障碍物。');
                 resetGame();
             }
         });
