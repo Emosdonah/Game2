@@ -2,12 +2,12 @@ window.onload = function() {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    // 设置画布为手机屏幕大小
+    // 设置画布大小
     canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.height = window.innerHeight * 0.8; // 保留底部空间放按钮
 
     const characterSize = 50;
-    const groundLevel = canvas.height - characterSize - 50;
+    const groundLevel = canvas.height - characterSize - 20; // 地面高度
     let characterX = 100;
     let characterY = groundLevel;
     let isJumping = false;
@@ -22,19 +22,19 @@ window.onload = function() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
         // 背景
-        ctx.fillStyle = '#87CEEB';
+        ctx.fillStyle = '#87CEEB'; // 蓝色背景
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // 地面
-        ctx.fillStyle = '#654321';
-        ctx.fillRect(0, groundLevel + characterSize, canvas.width, 50);
+        ctx.fillStyle = '#654321'; // 棕色地面
+        ctx.fillRect(0, groundLevel + characterSize, canvas.width, 20);
 
         // 角色
-        ctx.fillStyle = 'green';
+        ctx.fillStyle = 'green'; // 绿色方块角色
         ctx.fillRect(characterX, characterY, characterSize, characterSize);
 
         // 障碍物
-        ctx.fillStyle = 'gray';
+        ctx.fillStyle = 'gray'; // 灰色障碍物
         obstacles.forEach(obstacle => {
             ctx.fillRect(obstacle.x, obstacle.y, obstacle.width, obstacle.height);
         });
@@ -45,7 +45,7 @@ window.onload = function() {
 
     document.getElementById('moveLeft').addEventListener('touchstart', function() {
         moveLeftInterval = setInterval(() => {
-            characterX -= 8; // 增加移动速度
+            characterX -= 10; // 增加移动速度
             if (characterX < 0) characterX = 0;
             draw();
         }, 20);
@@ -57,7 +57,7 @@ window.onload = function() {
 
     document.getElementById('moveRight').addEventListener('touchstart', function() {
         moveRightInterval = setInterval(() => {
-            characterX += 8; // 增加移动速度
+            characterX += 10; // 增加移动速度
             if (characterX > canvas.width - characterSize) characterX = canvas.width - characterSize;
             draw();
         }, 20);
@@ -72,8 +72,8 @@ window.onload = function() {
             isJumping = true;
             let jumpHeight = 0;
             const jumpInterval = setInterval(() => {
-                if (jumpHeight < 120) {
-                    characterY -= 10; // 提高跳跃高度和速度
+                if (jumpHeight < 150) {
+                    characterY -= 10; // 增加跳跃高度和速度
                     jumpHeight += 10;
                 } else {
                     clearInterval(jumpInterval);
