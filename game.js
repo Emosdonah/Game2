@@ -2,15 +2,6 @@ window.onload = function() {
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
 
-    // 角色和背景圖片
-    const background = new Image();
-    const character = new Image();
-    const obstacle = new Image();
-
-    background.src = 'background.jpg'; // 請確保這些圖片已經存在並且路徑正確
-    character.src = 'character.png';
-    obstacle.src = 'obstacle.png';
-
     // 角色的初始位置
     let characterX = 100;
     let characterY = 300;
@@ -25,12 +16,19 @@ window.onload = function() {
     // 畫出遊戲畫面
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        ctx.drawImage(character, characterX, characterY, 50, 50);
 
-        // 畫出障礙物
+        // 繪製背景
+        ctx.fillStyle = '#87CEEB'; // 藍色背景
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        // 繪製角色
+        ctx.fillStyle = 'green'; // 綠色角色
+        ctx.fillRect(characterX, characterY, 50, 50);
+
+        // 繪製障礙物
+        ctx.fillStyle = 'gray'; // 灰色障礙物
         obstacles.forEach(obstacleItem => {
-            ctx.drawImage(obstacle, obstacleItem.x, obstacleItem.y, obstacleItem.width, obstacleItem.height);
+            ctx.fillRect(obstacleItem.x, obstacleItem.y, obstacleItem.width, obstacleItem.height);
         });
     }
 
@@ -101,11 +99,5 @@ window.onload = function() {
     }, 50);
 
     // 初始化遊戲畫面
-    background.onload = function() {
-        character.onload = function() {
-            obstacle.onload = function() {
-                draw();
-            };
-        };
-    };
+    draw();
 };
