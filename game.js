@@ -5,29 +5,20 @@ window.onload = function() {
     // 載入背景和角色圖片
     const background = new Image();
     const character = new Image();
-    background.src = 'background.png'; // 確保路徑正確
+    background.src = 'background.jpg'; // 確保路徑正確
     character.src = 'character.png';   // 確保路徑正確
 
-    let characterX = 100; // 角色的初始 X 坐標
-    let characterY = 400; // 角色的初始 Y 坐標
-    let isJumping = false;
-
     // 等待圖片完全加載後再繪製
-    let imagesLoaded = 0;
-    background.onload = imageLoaded;
-    character.onload = imageLoaded;
-
-    function imageLoaded() {
-        imagesLoaded++;
-        if (imagesLoaded === 2) { // 確保兩個圖片都已加載
+    background.onload = function() {
+        character.onload = function() {
             draw();
-        }
-    }
+        };
+    };
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // 清空畫布
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height); // 繪製背景
-        ctx.drawImage(character, characterX, characterY, 50, 50); // 繪製角色
+        ctx.drawImage(character, 100, 400, 50, 50); // 繪製角色，X=100，Y=400，寬高=50x50
     }
 
     // 監聽「向左」按鈕點擊事件
