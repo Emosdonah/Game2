@@ -5,8 +5,8 @@ window.onload = function() {
     // 載入背景和角色圖片
     const background = new Image();
     const character = new Image();
-    background.src = 'background.jpg'; // 背景圖片的路徑
-    character.src = 'character.png';   // 角色圖片的路徑
+    background.src = 'background.jpg'; // 確保路徑正確
+    character.src = 'character.png';   // 確保路徑正確
 
     let characterX = 100; // 角色的初始 X 坐標
     let characterY = 400; // 角色的初始 Y 坐標
@@ -52,6 +52,7 @@ window.onload = function() {
                         if (characterY < 400) {
                             characterY += 5; // 向下移動
                         } else {
+                            characterY = 400; // 確保角色回到地面
                             clearInterval(fallInterval);
                             isJumping = false;
                         }
