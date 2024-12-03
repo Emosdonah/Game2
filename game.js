@@ -33,16 +33,31 @@ window.onload = function() {
     }
 
     // 角色移動的按鈕事件
-    document.getElementById('moveLeft').addEventListener('click', function() {
-        characterX -= 10; // 向左移動
-        if (characterX < 0) characterX = 0; // 防止角色移出畫布
-        draw();
+    let moveLeftInterval;
+    let moveRightInterval;
+
+    document.getElementById('moveLeft').addEventListener('mousedown', function() {
+        moveLeftInterval = setInterval(() => {
+            characterX -= 2; // 向左移動
+            if (characterX < 0) characterX = 0; // 防止角色移出畫布
+            draw();
+        }, 30);
     });
 
-    document.getElementById('moveRight').addEventListener('click', function() {
-        characterX += 10; // 向右移動
-        if (characterX > canvas.width - 50) characterX = canvas.width - 50; // 防止角色移出畫布
-        draw();
+    document.getElementById('moveLeft').addEventListener('mouseup', function() {
+        clearInterval(moveLeftInterval);
+    });
+
+    document.getElementById('moveRight').addEventListener('mousedown', function() {
+        moveRightInterval = setInterval(() => {
+            characterX += 2; // 向右移動
+            if (characterX > canvas.width - 50) characterX = canvas.width - 50; // 防止角色移出畫布
+            draw();
+        }, 30);
+    });
+
+    document.getElementById('moveRight').addEventListener('mouseup', function() {
+        clearInterval(moveRightInterval);
     });
 
     document.getElementById('jump').addEventListener('click', function() {
