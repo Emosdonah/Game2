@@ -3,25 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>遊戲</title>
-    <link rel="stylesheet" href="styles.css"> <!-- 如果有 CSS 文件 -->
+    <title>測試頁面</title>
 </head>
 <body>
-    <canvas id="gameCanvas" width="800" height="600"></canvas>
-    
-    <!-- 檢查圖片是否加載成功的 JavaScript -->
+    <h1>測試頁面</h1>
+    <canvas id="gameCanvas" width="800" height="600" style="border: 1px solid black;"></canvas>
     <script>
-        const background = new Image();
-        background.src = "background.png"; // 請確保路徑正確
-
-        background.onload = function() {
-            console.log("背景圖片加載成功");
-        };
-        background.onerror = function() {
-            console.error("背景圖片加載失敗");
-        };
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'green';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
     </script>
-    
-    <script src="game.js"></script> <!-- 如果有 JavaScript 文件 -->
 </body>
 </html>
