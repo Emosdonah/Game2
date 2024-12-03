@@ -1,60 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>2D Jump Game</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: flex-end;
-      height: 100vh;
-      background-color: #87CEEB; /* 蓝色背景 */
-    }
-
-    #gameCanvas {
-      display: block;
-      flex-grow: 1;
-      width: 100%;
-      height: 100%;
-    }
-
-    .controls {
-      display: flex;
-      justify-content: space-between;
-      width: 100%;
-      background-color: #f0f0f0;
-      padding: 10px 0;
-    }
-
-    button {
-      flex-grow: 1;
-      margin: 0 5px;
-      padding: 10px;
-      font-size: 18px;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    button:active {
-      background-color: #45a049;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2D 横向跳跃游戏</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        canvas {
+            flex: 1;
+            display: block;
+            background: #87CEEB; /* 蓝色背景 */
+        }
+        #controls {
+            display: flex;
+            justify-content: space-around;
+            background: #333;
+            padding: 10px;
+        }
+        button {
+            flex: 1;
+            margin: 0 10px;
+            padding: 10px;
+            font-size: 18px;
+            color: #fff;
+            background: #555;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+        button:active {
+            background: #777;
+        }
+    </style>
 </head>
 <body>
-  <canvas id="gameCanvas"></canvas>
-  <div class="controls">
-    <button id="moveLeft">Left</button>
-    <button id="jump">Jump</button>
-    <button id="moveRight">Right</button>
-  </div>
-  <script src="game.js"></script>
+    <canvas id="gameCanvas"></canvas>
+    <div id="controls">
+        <button id="moveLeft">← 左移</button>
+        <button id="jump">↑ 跳跃</button>
+        <button id="moveRight">→ 右移</button>
+    </div>
+    <script src="game.js"></script>
 </body>
 </html>
