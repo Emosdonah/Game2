@@ -12,6 +12,13 @@ background.src = "background.png"; // 替換為你的背景圖片文件名
 const characterImage = new Image();
 characterImage.src = "character.png"; // 替換為你的角色圖片文件名
 
+// 等待圖片加載完成後開始遊戲
+background.onload = function () {
+    characterImage.onload = function () {
+        gameLoop(); // 開始遊戲主循環
+    };
+};
+
 // 角色對象
 const player = {
     x: 50,
@@ -86,6 +93,3 @@ function gameLoop() {
     draw(); // 繪製畫面
     requestAnimationFrame(gameLoop); // 下一幀執行
 }
-
-// 開始遊戲
-gameLoop();
