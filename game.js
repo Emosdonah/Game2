@@ -45,7 +45,7 @@ window.onload = function() {
 
     document.getElementById('moveLeft').addEventListener('touchstart', function() {
         moveLeftInterval = setInterval(() => {
-            characterX -= 10; // 增加移动速度
+            characterX -= 10; // 移动速度
             if (characterX < 0) characterX = 0;
             draw();
         }, 20);
@@ -57,7 +57,7 @@ window.onload = function() {
 
     document.getElementById('moveRight').addEventListener('touchstart', function() {
         moveRightInterval = setInterval(() => {
-            characterX += 10; // 增加移动速度
+            characterX += 10; // 移动速度
             if (characterX > canvas.width - characterSize) characterX = canvas.width - characterSize;
             draw();
         }, 20);
@@ -73,13 +73,13 @@ window.onload = function() {
             let jumpHeight = 0;
             const jumpInterval = setInterval(() => {
                 if (jumpHeight < 150) {
-                    characterY -= 10; // 增加跳跃高度和速度
-                    jumpHeight += 10;
+                    characterY -= 5; // 减慢上升速度
+                    jumpHeight += 5;
                 } else {
                     clearInterval(jumpInterval);
                     const fallInterval = setInterval(() => {
                         if (characterY < groundLevel) {
-                            characterY += 10;
+                            characterY += 5; // 减慢下降速度
                         } else {
                             characterY = groundLevel;
                             clearInterval(fallInterval);
