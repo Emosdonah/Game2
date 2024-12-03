@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>簡單遊戲</title>
-  <style>
-    canvas {
-      display: block;
-      margin: 0 auto;
-      background: #87ceeb;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>遊戲</title>
+    <link rel="stylesheet" href="styles.css"> <!-- 如果有 CSS 文件 -->
 </head>
 <body>
-  <canvas id="gameCanvas" width="800" height="400"></canvas>
-  <script src="game.js"></script>
+    <canvas id="gameCanvas" width="800" height="600"></canvas>
+    
+    <!-- 檢查圖片是否加載成功的 JavaScript -->
+    <script>
+        const background = new Image();
+        background.src = "background.png"; // 請確保路徑正確
+
+        background.onload = function() {
+            console.log("背景圖片加載成功");
+        };
+        background.onerror = function() {
+            console.error("背景圖片加載失敗");
+        };
+    </script>
+    
+    <script src="game.js"></script> <!-- 如果有 JavaScript 文件 -->
 </body>
 </html>
