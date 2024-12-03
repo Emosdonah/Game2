@@ -5,19 +5,48 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2D Game</title>
     <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
         canvas {
-            display: block;
-            margin: 0 auto;
-            background-color: #87CEEB; /* 藍色背景 */
+            border: 2px solid black;
+            margin-bottom: 20px;
+        }
+        .controls {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            padding: 10px;
+        }
+        .button {
+            width: 80px;
+            height: 80px;
+            font-size: 24px;
+            margin: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+        .button:active {
+            background-color: #45a049;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
     </style>
 </head>
 <body>
     <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <button id="moveLeft">Move Left</button>
-    <button id="moveRight">Move Right</button>
-    <button id="jump">Jump</button>
-
+    <div class="controls">
+        <button id="moveLeft" class="button">←</button>
+        <button id="jump" class="button">↑</button>
+        <button id="moveRight" class="button">→</button>
+    </div>
     <script src="game.js"></script>
 </body>
 </html>
