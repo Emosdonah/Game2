@@ -1,23 +1,111 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2D Game</title>
-    <style>
-        canvas {
-            display: block;
-            margin: 0 auto;
-            background-color: #cce7ff; /* 背景色 */
-        }
-    </style>
-</head>
-<body>
-    <canvas id="gameCanvas" width="800" height="400"></canvas>
-    <button id="moveLeft">Move Left</button>
-    <button id="moveRight">Move Right</button>
-    <button id="jump">Jump</button>
+window.onload = function() {
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
 
-    <script src="game.js"></script>
-</body>
-</html>
+    // 角色和背景圖片
+    const background = new Image();
+    const character = new Image();
+    const obstacle = new Image();
+
+    background.src = 'background.jpg'; // 請確保這些圖片已經存在並且路徑正確
+    character.src = 'character.png';
+    obstacle.src = 'obstacle.png';
+
+    // 角色的初始位置
+    let characterX = 100;
+    let characterY = 300;
+    let isJumping = false;
+
+    // 障礙物的設置
+    let obstacles = [
+        { x: 400, y: 300, width: 50, height: 50 }, // 障礙物1
+        { x: 600, y: 250, width: 50, height: 50 }  // 障礙物2
+    ];
+
+    // 畫出遊戲畫面
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(character, characterX, characterY, 50, 50);
+
+        // 畫出障礙物
+        obstacles.forEach(obstacleItem => {
+            ctx.drawImage(obstacle, obstacleItem.x, obstacleItem.y, obstacleItem.width, obstacleItem.height);
+        });
+    }
+
+    // 角色移動的按鈕事件
+    document.getElementById('moveLeft').addEventListener('click', function() {
+        characterX -= 10; // 向左移動
+        if (characterX < 0) characterX = 0; // 防止角色移出畫布
+        draw();
+    });
+
+    document.getElementById('moveRight').addEventListener('click', function() {
+        characterX += 10; // 向右移動
+        if (characterX > canvas.width - 50) characterX = canvas.width - 50; // 防止角色移出畫布
+        draw();
+    });
+
+    document.getElementById('jump').addEventListener('click', function() {
+        if (!isJumping) {
+            isJumping = true;
+            let jumpHeight = 0;
+            const jumpInterval = setInterval(() => {
+                if (jumpHeight < 100) {
+                    characterY -= 5; // 向上移動
+                    jumpHeight += 5;
+                } else {
+                    clearInterval(jumpInterval);
+                    const fallInterval = setInterval(() => {
+                        if (characterY < 300) {
+                            characterY += 5; // 向下移動
+                        } else {
+                            characterY = 300; // 確保角色回到地面
+                            clearInterval(fallInterval);
+                            isJumping = false;
+                        }
+                        draw();
+                    }, 30);
+                }
+                draw();
+            }, 30);
+        }
+    });
+
+    // 監測角色是否與障礙物碰撞
+    function checkCollision() {
+        obstacles.forEach(obstacleItem => {
+            if (
+                characterX < obstacleItem.x + obstacleItem.width &&
+                characterX + 50 > obstacleItem.x &&
+                characterY < obstacleItem.y + obstacleItem.height &&
+                characterY + 50 > obstacleItem.y
+            ) {
+                alert('Game Over! Collision detected.');
+                resetGame();
+            }
+        });
+    }
+
+    // 重置遊戲
+    function resetGame() {
+        characterX = 100;
+        characterY = 300;
+        draw();
+    }
+
+    // 遊戲循環
+    setInterval(() => {
+        checkCollision();
+    }, 50);
+
+    // 初始化遊戲畫面
+    background.onload = function() {
+        character.onload = function() {
+            obstacle.onload = function() {
+                draw();
+            };
+        };
+    };
+};
