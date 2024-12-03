@@ -6,13 +6,18 @@ const ctx = canvas.getContext("2d");
 const gravity = 0.5; // 重力值
 const groundHeight = canvas.height - 50; // 地面高度
 
+// 載入圖片
+const background = new Image();
+background.src = "background.png"; // 替換為你的背景圖片文件名
+const characterImage = new Image();
+characterImage.src = "character.png"; // 替換為你的角色圖片文件名
+
 // 角色對象
 const player = {
     x: 50,
     y: groundHeight - 50,
-    width: 50,
-    height: 50,
-    color: "red",
+    width: 50, // 預設角色寬度
+    height: 50, // 預設角色高度
     speed: 5, // 移動速度
     dy: 0, // 垂直速度
     jumpPower: 10, // 跳躍力量
@@ -24,11 +29,10 @@ const keys = {};
 
 // 監聽按鍵事件
 window.addEventListener("keydown", function (e) {
-    keys[e.key] = true; // 記錄按下的按鍵
+    keys[e.key] = true;
 });
-
 window.addEventListener("keyup", function (e) {
-    keys[e.key] = false; // 移除未按下的按鍵
+    keys[e.key] = false;
 });
 
 // 更新遊戲邏輯
@@ -65,16 +69,15 @@ function update() {
 
 // 繪製角色與場景
 function draw() {
-    // 清空畫布
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    // 繪製背景
+    ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
 
     // 繪製地面
     ctx.fillStyle = "green";
     ctx.fillRect(0, groundHeight, canvas.width, canvas.height - groundHeight);
 
     // 繪製角色
-    ctx.fillStyle = player.color;
-    ctx.fillRect(player.x, player.y, player.width, player.height);
+    ctx.drawImage(characterImage, player.x, player.y, player.width, player.height);
 }
 
 // 遊戲主循環
