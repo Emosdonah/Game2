@@ -5,19 +5,24 @@ window.onload = function() {
     // 載入背景和角色圖片
     const background = new Image();
     const character = new Image();
-    background.src = 'background.jpg'; // 確保路徑正確
+    background.src = 'background.png'; // 確保路徑正確
     character.src = 'character.png';   // 確保路徑正確
 
     let characterX = 100; // 角色的初始 X 坐標
     let characterY = 400; // 角色的初始 Y 坐標
     let isJumping = false;
 
-    // 當背景和角色圖片都加載完成後，繪製畫布
-    background.onload = function() {
-        character.onload = function() {
+    // 等待圖片完全加載後再繪製
+    let imagesLoaded = 0;
+    background.onload = imageLoaded;
+    character.onload = imageLoaded;
+
+    function imageLoaded() {
+        imagesLoaded++;
+        if (imagesLoaded === 2) { // 確保兩個圖片都已加載
             draw();
-        };
-    };
+        }
+    }
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // 清空畫布
